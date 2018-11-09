@@ -1,26 +1,19 @@
 import React, {Component} from 'react';
+import TextField from "@material-ui/core/TextField/TextField";
 
 class OldLogoForm extends Component {
     render() {
         return (
             <React.Fragment>
-                <div className="row justify-content-md-center">
-                    <div className="col-lg-8 text-center">
-                        <form>
-                            <div className="form-group">
-                                <h2 className="text-left">Old Qestion</h2>
-                                <input
-                                    type="email"
-                                    className="form-control"
-                                    id="formGroupExampleInput"
-                                    placeholder="your@email.com"
-                                    onChange={this.mailHandeler}
-                                />
+                <TextField
+                    id="standard-old-logo"
+                    label="Old logo"
+                    placeholder="Old logo link"
+                    margin="normal"
+                    fullWidth
+                    type="text"
 
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                />
             </React.Fragment>
         );
     }

@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'jquery/dist/jquery.min'
-import 'bootstrap/dist/js/bootstrap.min.js';
+import 'typeface-roboto';
 import ContactForm from './components/contactForm';
 
 ReactDOM.render(<ContactForm />, document.getElementById('root'));
