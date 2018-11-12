@@ -14,13 +14,13 @@ class ContactForm extends Component {
     render() {
         return (
             <React.Fragment>
-                <div className="container pb-5">
+                <div  className="container pb-5">
                     <div className="row justify-content-md-center">
                         <div className="col col-lg-8-">
                             <PaperSheet/>
                         </div>
                     </div>
-                    <MainForm/>
+                    <MainForm />
                 </div>
 
             </React.Fragment>

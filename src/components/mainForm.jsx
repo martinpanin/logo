@@ -1,57 +1,46 @@
 import React, {Component} from 'react';
 import TextField from '@material-ui/core/TextField';
 import BottomAppBar from "./BottomAppBar";
-import OldLogoForm from "./oldLogoForm";
 import Button from "@material-ui/core/Button/Button";
 
 class MainForm extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
-            contacts: props.contacts,
             clientAnswer: null,
-            client: {
-                name: props.name,
-                email:  props.email,
-                tel: props.tel,
-                companyName: props.companyName,
-                aboutCompany: props.aboutCompany,
-                aboutLogo: props.aboutLogo,
-                likedLogo: props.likedLogo,
-                oldLogo: props.oldLogo
-            }
-
-        };
-
-        this.name = React.createRef();
-        this.email= React.createRef();
-        this.tel= React.createRef();
-        this.companyName= React.createRef();
-        this.aboutCompany= React.createRef();
-        this.aboutLogo= React.createRef();
-        this.likedLogo= React.createRef();
-        this.oldLogo= React.createRef();
-
-    }
-
+            name: null,
+            email: null,
+            tel: null,
+            companyName: null,
+            aboutCompany: null,
+            aboutLogo: null,
+            likedLogo: null,
+            oldLogo: null
+            };
+    };
 
     handleChange(event) {
-        console.log(event.target.value);
-        this.setState({clients: event.target.value})
+        this.setState({
+            [event.target.name]: event.target.value});
     }
+
 
     addContact(event) {
         event.preventDefault();
-        let name = {client: name.event.target.value};
-        console.log(prop.name);
-    }
+        console.log(this.state.name, this.state.email);
+        alert()
+
+    };
+
+
 
     render() {
 
         return (
             <React.Fragment>
                 <div className="row justify-content-md-center">
-                    <div className="col col-lg-6 text-center">
+                    <div  className="col col-lg-6 text-center">
                         <h2>Do you already have a logo?</h2>
 
                         <div className="btn-group btn-group-toggle" data-toggle="buttons">
@@ -59,7 +48,7 @@ class MainForm extends Component {
                                 variant="contained"
                                 color="secondary"
                                 size="large"
-                                onClick={() => {this.setState({clientAnswer: false})}}
+                                onClick={() => {this.setState({clientAnswer: false});document.querySelector("#old-logo").style.display = "none"}}
 
                             >
                                 No
@@ -69,7 +58,7 @@ class MainForm extends Component {
                                 variant="contained"
                                 color="secondary"
                                 size="large"
-                                onClick={() => {this.setState({clientAnswer: true});}}
+                                onClick={() => {this.setState({clientAnswer: true}); document.querySelector("#old-logo").style.display = "block"}}
                             >
                                 Yes
                             </Button>
@@ -82,7 +71,24 @@ class MainForm extends Component {
                     <div className="col-lg-8 text-center">
                         <form onSubmit={this.addContact.bind(this)}>
                             <div className="form-group">
-                                {this.state.clientAnswer === true ? <OldLogoForm/> : null}
+                                <div style={{display: "none"}} id="old-logo">
+                                    <TextField
+                                        id="standard-old-logo"
+                                        label="Old logo"
+                                        placeholder="Old logo link"
+                                        margin="normal"
+                                        fullWidth
+                                        type="text"
+                                        name="oldLogo"
+                                        value={this.state.oldLogo}
+                                        // ref={this.oldLogoRef}
+                                        onChange={this.handleChange.bind(this)}
+
+
+                                    />
+                                </div>
+                                {/*{this.state.clientAnswer === true ? this.dispalyBlock() : this.dispayNone() }*/}
+
                                 <TextField
                                     required
                                     id="standard-name"
@@ -91,32 +97,35 @@ class MainForm extends Component {
                                     margin="normal"
                                     fullWidth
                                     type="text"
-                                    ref={this.name}
-                                    value={this.state.client.name}
-                                    onChange={this.handleChange.bind(this)}
+                                    name="name"
+                                    // ref={this.nameRef}
+                                     value={this.state.name}
+                                     onChange={this.handleChange.bind(this)}
                                 />
                                 <TextField
-                                    required
+
                                     id="standard-email-input"
                                     label="E-mail"
                                     placeholder="your@email.com"
                                     margin="normal"
                                     fullWidth
                                     type="email"
-                                    ref={this.email}
-                                    value={this.state.client.email}
+                                    name="email"
+                                    // ref={this.emailRef}
+                                    value={this.state.email}
                                     onChange={this.handleChange.bind(this)}
                                 />
                                 <TextField
-                                    required
+
                                     id="standard-tel"
                                     label="Telephone"
                                     placeholder="+372 5566778"
                                     margin="normal"
                                     fullWidth
                                     type="tel"
-                                    ref={this.tel}
-                                    value={this.state.client.tel}
+                                    name="tel"
+                                    // ref={this.telRef}
+                                    value={this.state.tel}
                                     onChange={this.handleChange.bind(this)}
                                 />
                                 <TextField
@@ -126,8 +135,9 @@ class MainForm extends Component {
                                     margin="normal"
                                     fullWidth
                                     type="text"
-                                    ref={this.companyName}
-                                    value={this.state.client.companyName}
+                                    name="companyName"
+                                    // ref={this.companyNameRef}
+                                    value={this.state.companyName}
                                     onChange={this.handleChange.bind(this)}
                                 />
                                 <TextField
@@ -138,20 +148,22 @@ class MainForm extends Component {
                                     multiline
                                     fullWidth
                                     margin="normal"
-                                    ref={this.aboutCompany}
-                                    value={this.state.client.aboutCompany}
+                                    name="aboutCompany"
+                                    // ref={this.aboutCompanyRef}
+                                    value={this.state.aboutCompany}
                                     onChange={this.handleChange.bind(this)}
                                 />
                                 <TextField
-                                    required
+
                                     id="standard-about-logo"
                                     label="Tell us about your idea"
                                     placeholder="My logo should be the super cool..."
                                     multiline
                                     fullWidth
                                     margin="normal"
-                                    ref={this.aboutLogo}
-                                    value={this.state.client.aboutLogo}
+                                    name="aboutLogo"
+                                    // ref={this.aboutLogoRef}
+                                    value={this.state.aboutLogo}
                                     onChange={this.handleChange.bind(this)}
                                 />
                                 <TextField
@@ -161,8 +173,9 @@ class MainForm extends Component {
                                     multiline
                                     fullWidth
                                     margin="normal"
-                                    ref={this.likedLogo}
-                                    value={this.state.client.likedLogo}
+                                    name="likedLogo"
+                                    // ref={this.likedLogoRef}
+                                    value={this.state.likedLogo}
                                     onChange={this.handleChange.bind(this)}
                                 />
                             </div>
@@ -174,6 +187,7 @@ class MainForm extends Component {
         );
     }
 }
+
 
 
 export default MainForm;
