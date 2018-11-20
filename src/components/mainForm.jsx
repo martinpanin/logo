@@ -10,7 +10,7 @@ class MainForm extends Component {
         this.state = {
             clientAnswer: null,
             name: null,
-            email: null,
+            senderEmail: null,
             tel: null,
             companyName: null,
             aboutCompany: null,
@@ -26,10 +26,46 @@ class MainForm extends Component {
     }
 
 
-    addContact(event) {
+    handleSubmit(event) {
         event.preventDefault();
-        console.log(this.state.name, this.state.email);
-        alert()
+
+        this.sendFeedback(
+            'template_2cTSyXC6',
+            this.state.senderEmail,
+            'job@geekdev.ee',
+            this.state.name,
+            this.state.tel,
+            this.state.companyName,
+            this.state.aboutCompany,
+            this.state.aboutLogo,
+            this.state.likedLogo);
+
+        this.setState({
+            formSubmitted: true
+        })
+    }
+
+    sendFeedback (templateId, senderEmail, receiverEmail, name, tel, companyName, aboutCompany, aboutLogo, likedLogo) {
+        window.emailjs.send(
+            'logo',
+            templateId,
+            {
+                senderEmail,
+                receiverEmail,
+                name,
+                tel,
+                companyName,
+                aboutCompany,
+                aboutLogo,
+                likedLogo
+            })
+            .then(res => {
+                this.setState({ formEmailSent: true })
+            })
+            // Handle errors here however you like, or use a React error boundary
+            .catch(err => console.error('Failed to send feedback. Error: ', err));
+
+        console.log(this.state.name, this.state.senderEmail, this.state.tel, this.state.companyName, this.state.aboutCompany, this.state.aboutLogo, this.state.likedLogo);
 
     };
 
@@ -39,7 +75,7 @@ class MainForm extends Component {
 
         return (
             <React.Fragment>
-                <div className="row justify-content-md-center">
+                <div id="id2" className="row justify-content-md-center">
                     <div  className="col col-lg-6 text-center">
                         <h2>Do you already have a logo?</h2>
 
@@ -69,7 +105,7 @@ class MainForm extends Component {
                 </div>
                 <div className="row justify-content-md-center">
                     <div className="col-lg-8 text-center">
-                        <form onSubmit={this.addContact.bind(this)}>
+                        <form onSubmit={this.handleSubmit.bind(this)}>
                             <div className="form-group">
                                 <div style={{display: "none"}} id="old-logo">
                                     <TextField
@@ -83,12 +119,9 @@ class MainForm extends Component {
                                         value={this.state.oldLogo}
                                         // ref={this.oldLogoRef}
                                         onChange={this.handleChange.bind(this)}
-
-
                                     />
                                 </div>
-                                {/*{this.state.clientAnswer === true ? this.dispalyBlock() : this.dispayNone() }*/}
-
+                                <div id="id3" >
                                 <TextField
                                     required
                                     id="standard-name"
@@ -102,6 +135,7 @@ class MainForm extends Component {
                                      value={this.state.name}
                                      onChange={this.handleChange.bind(this)}
                                 />
+                                </div>
                                 <TextField
 
                                     id="standard-email-input"
@@ -110,9 +144,9 @@ class MainForm extends Component {
                                     margin="normal"
                                     fullWidth
                                     type="email"
-                                    name="email"
+                                    name="senderEmail"
                                     // ref={this.emailRef}
-                                    value={this.state.email}
+                                    value={this.state.senderEmail}
                                     onChange={this.handleChange.bind(this)}
                                 />
                                 <TextField
@@ -187,7 +221,5 @@ class MainForm extends Component {
         );
     }
 }
-
-
 
 export default MainForm;
